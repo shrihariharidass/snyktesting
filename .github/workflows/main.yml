@@ -1,0 +1,18 @@
+name: Snyk Container Scan and Code Scanning
+
+on: [push, pull_request]  # Trigger on pushes and pull requests
+
+jobs:
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Snyk container scan
+        uses: snyk/actions/scan@master
+        with:
+          image: <span class="math-inline">\{\{ github\.repository \}\}\:</span>{{ github.sha }}  # Scan the built image
+          args: --file=Dockerfile --sarif-file-output=snyk.sarif
+      - name: Upload results to Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
