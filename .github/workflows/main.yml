@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run Snyk container scan
-        uses: snyk/actions/scan@main
+        uses: shrihariharidass/github-action/.github/workflows/main.yml#main
         with:
           image: <span class="math-inline">\{\{ github\.repository \}\}\:</span>{{ github.sha }}  # Scan the built image
           args: --file=Dockerfile --sarif-file-output=snyk.sarif
